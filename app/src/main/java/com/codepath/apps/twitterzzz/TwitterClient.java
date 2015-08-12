@@ -27,8 +27,8 @@ import java.util.concurrent.locks.ReadWriteLock;
 public class TwitterClient extends OAuthBaseClient {
 	public static final Class<? extends Api> REST_API_CLASS = TwitterApi.class;
 	public static final String REST_URL = "https://api.twitter.com/1.1";
-	public static final String REST_CONSUMER_KEY = ""; // TODO
-	public static final String REST_CONSUMER_SECRET = ""; // TODO
+	public static final String REST_CONSUMER_KEY = "";
+	public static final String REST_CONSUMER_SECRET = "";
 	public static final String REST_CALLBACK_URL = "oauth://twitterzzz";
 
 	public TwitterClient(Context context) {
@@ -43,4 +43,24 @@ public class TwitterClient extends OAuthBaseClient {
             requestParams.put("max_id", maxId);
         getClient().get(apiUrl, requestParams, handler);
 	}
+
+	public void getUserInfo(AsyncHttpResponseHandler handler) {
+		String apiUrl = getApiUrl("account/verify_credentials.json");
+		getClient().get(apiUrl, null, handler);
+	}
+
+    public void postTweet(String content, AsyncHttpResponseHandler handler) {
+        String apiUrl = getApiUrl("statuses/update.json");
+        RequestParams requestParams = new RequestParams();
+        requestParams.put("status", content);
+        getClient().post(apiUrl, requestParams, handler);
+    }
+
+    public void getLastUserTweet(AsyncHttpResponseHandler handler) {
+        String apiUrl = getApiUrl("statuses/user_timeline.json");
+        RequestParams requestParams = new RequestParams();
+        requestParams.put("count", 1);
+        requestParams.put("since_id", 1);
+        getClient().get(apiUrl, requestParams, handler);
+    }
 }

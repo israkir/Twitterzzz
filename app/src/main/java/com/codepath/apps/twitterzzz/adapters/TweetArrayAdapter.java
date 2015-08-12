@@ -14,8 +14,6 @@ import com.codepath.apps.twitterzzz.models.Tweet;
 import com.codepath.apps.twitterzzz.utils.Util;
 import com.squareup.picasso.Picasso;
 
-import org.w3c.dom.Text;
-
 import java.util.List;
 
 
@@ -34,8 +32,8 @@ public class TweetArrayAdapter extends ArrayAdapter<Tweet> {
         }
 
         ImageView ivProfileImage = (ImageView) convertView.findViewById(R.id.ivProfileImage);
-        TextView tvScreenName = (TextView) convertView.findViewById(R.id.tvScreenName);
-        TextView tvName = (TextView) convertView.findViewById(R.id.tvName);
+        TextView tvScreenName = (TextView) convertView.findViewById(R.id.tvName);
+        TextView tvName = (TextView) convertView.findViewById(R.id.tvScreenName);
         TextView tvCreatedAt = (TextView) convertView.findViewById(R.id.tvCreatedAt);
         TextView tvText = (TextView) convertView.findViewById(R.id.tvText);
 

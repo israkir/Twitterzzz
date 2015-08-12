@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="app_name">Twitterzzz</string>
     <string name="login_label">Connect to Twitter</string>
     <string name="title_activity_timeline">Twitterzzz</string>
     <string name="action_settings">Settings</string>
     <string name="no_network">No network available</string>
     <string name="get_timeline_fail">Failed to get your timeline</string>
-
+    <string name="action_compose">Compose</string>
+    <string name="title_activity_compose">Compose a Tweet</string>
+    <string name="get_user_info_fail">Failed to get user information</string>
+    <string name="post_tweet_fail">Failed to post tweet</string>
 </resources>
