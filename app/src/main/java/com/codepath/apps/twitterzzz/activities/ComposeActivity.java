@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,6 +31,8 @@ public class ComposeActivity extends ActionBarActivity {
     private ImageView ivProfileImage;
     private TextView tvName;
     private TextView tvScreenName;
+    private TextView tvCharCounter;
+    private EditText etContent;
     private SharedPreferences userInfo;
     private String newTweetContent;
 
@@ -46,22 +50,39 @@ public class ComposeActivity extends ActionBarActivity {
         ivProfileImage = (ImageView) findViewById(R.id.ivProfileImage);
         tvName = (TextView) findViewById(R.id.tvScreenName);
         tvScreenName = (TextView) findViewById(R.id.tvName);
+        tvCharCounter = (TextView) findViewById(R.id.tvCharCounter);
+        etContent = (EditText) findViewById(R.id.etContent);
 
         ivProfileImage.setImageResource(android.R.color.transparent);
         Picasso.with(getBaseContext()).load(userInfo.getString("profileImageUrl", "")).into(ivProfileImage);
         tvScreenName.setText("@" + userInfo.getString("screenName", ""));
         tvName.setText("(" + userInfo.getString("name", "") + ")");
+
+        etContent.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // ignore
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // ignore
+            }
+
+            public void afterTextChanged(Editable s) {
+                tvCharCounter.setText(String.valueOf(140 - s.length()));
+            }
+        });
     }
 
     public void onTweet(View view) {
-        EditText etContent = (EditText) findViewById(R.id.etContent);
+        etContent = (EditText) findViewById(R.id.etContent);
         newTweetContent = etContent.getText().toString();
 
         client.postTweet(newTweetContent, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject jsonObject) {
                 Intent intent = new Intent(ComposeActivity.this, TimelineActivity.class);
-                intent.putExtra("newTweet", newTweetContent);
                 startActivity(intent);
             }
 

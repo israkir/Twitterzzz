@@ -108,20 +108,17 @@ public class TimelineActivity extends ActionBarActivity {
         });
     }
 
-    private void populateTimeline(long maxId) {
-        if (maxId == 0) {
-            tweets.clear();
-            aTweets.notifyDataSetChanged();
-        }
+    private void populateTimeline(final long maxId) {
+        if (maxId == 0)
+            aTweets.clear();
 
         if (isNetworkAvailable()) {
             client.getTimeline(maxId, new JsonHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONArray jsonArray) {
                     ArrayList<Tweet> tweets = Tweet.fromJsonArray(jsonArray);
-                    tweets.remove(0);
+                    if (maxId != 0) tweets.remove(0);
                     aTweets.addAll(tweets);
-                    aTweets.notifyDataSetChanged();
                 }
 
                 @Override
@@ -129,6 +126,7 @@ public class TimelineActivity extends ActionBarActivity {
                     Toast.makeText(getBaseContext(), R.string.get_timeline_fail, Toast.LENGTH_SHORT).show();
                 }
             });
+            aTweets.notifyDataSetChanged();
         } else {
             Toast.makeText(this, R.string.no_network, Toast.LENGTH_SHORT).show();
         }
