@@ -10,4 +10,8 @@
     <string name="title_activity_compose">Compose a Tweet</string>
     <string name="get_user_info_fail">Failed to get user information</string>
     <string name="post_tweet_fail">Failed to post tweet</string>
+    <string name="ic_profile">Profile</string>
+    <string name="title_activity_profile">Profile</string>
+
+    <string name="hello_world">Hello world!</string>
 </resources>

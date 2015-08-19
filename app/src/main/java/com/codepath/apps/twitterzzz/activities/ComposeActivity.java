@@ -6,7 +6,6 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,7 +17,6 @@ import android.widget.Toast;
 import com.codepath.apps.twitterzzz.R;
 import com.codepath.apps.twitterzzz.TwitterClient;
 import com.codepath.apps.twitterzzz.Twitterzzz;
-import com.codepath.apps.twitterzzz.models.User;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.squareup.picasso.Picasso;
 
@@ -47,9 +45,9 @@ public class ComposeActivity extends ActionBarActivity {
     private void setupViews() {
         userInfo = getSharedPreferences(TimelineActivity.USER_INFO, MODE_PRIVATE);
 
-        ivProfileImage = (ImageView) findViewById(R.id.ivProfileImage);
-        tvName = (TextView) findViewById(R.id.tvScreenName);
-        tvScreenName = (TextView) findViewById(R.id.tvName);
+        ivProfileImage = (ImageView) findViewById(R.id.ivComposeProfileImage);
+        tvName = (TextView) findViewById(R.id.tvComposeScreenName);
+        tvScreenName = (TextView) findViewById(R.id.tvComposeName);
         tvCharCounter = (TextView) findViewById(R.id.tvCharCounter);
         etContent = (EditText) findViewById(R.id.etContent);
 
@@ -98,20 +96,5 @@ public class ComposeActivity extends ActionBarActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_compose, menu);
         return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 }

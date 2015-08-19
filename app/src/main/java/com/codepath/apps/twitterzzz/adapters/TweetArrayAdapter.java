@@ -31,9 +31,9 @@ public class TweetArrayAdapter extends ArrayAdapter<Tweet> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_tweet, parent, false);
         }
 
-        ImageView ivProfileImage = (ImageView) convertView.findViewById(R.id.ivProfileImage);
-        TextView tvScreenName = (TextView) convertView.findViewById(R.id.tvName);
-        TextView tvName = (TextView) convertView.findViewById(R.id.tvScreenName);
+        ImageView ivProfileImage = (ImageView) convertView.findViewById(R.id.ivComposeProfileImage);
+        TextView tvScreenName = (TextView) convertView.findViewById(R.id.tvComposeName);
+        TextView tvName = (TextView) convertView.findViewById(R.id.tvComposeScreenName);
         TextView tvCreatedAt = (TextView) convertView.findViewById(R.id.tvCreatedAt);
         TextView tvText = (TextView) convertView.findViewById(R.id.tvText);
 
