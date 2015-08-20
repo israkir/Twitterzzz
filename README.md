@@ -30,12 +30,13 @@ The following **optional** features are implemented:
 
 * [x] User can **see a counter with total number of characters left for tweet** on compose tweet page
 * [x] User can **pull down to refresh tweets timeline**
+* [x] Links in tweets are clickable and will launch the web browser
 * [x] Implements robust error handling, handle api error cases, network failures
 * [x] Improve the user interface and theme the app to feel twitter branded
 
 ## Video Walkthrough 
 
-![Twitterzzz walkthrough](https://raw.githubusercontent.com/israkir/Twitterzzz/master/twitterzzz-walkthrough.gif)
+![Twitterzzz walkthrough](https://raw.githubusercontent.com/israkir/Twitterzzz/master/twitterzzz-walkthrough-v2.gif)
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 

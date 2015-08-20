@@ -3,6 +3,8 @@ package com.codepath.apps.twitterzzz.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,7 +57,8 @@ public class TweetArrayAdapter extends ArrayAdapter<Tweet> {
         tvScreenName.setText("@" + tweet.user.screenName);
         tvName.setText("(" + tweet.user.name + ")");
         tvCreatedAt.setText(Util.getRelativeTimeAgo(tweet.createdAt));
-        tvText.setText(tweet.text);
+        tvText.setMovementMethod(LinkMovementMethod.getInstance());
+        tvText.setText(Html.fromHtml(tweet.text));
 
         return convertView;
     }
