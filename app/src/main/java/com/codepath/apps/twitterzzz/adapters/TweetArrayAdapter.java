@@ -2,6 +2,7 @@ package com.codepath.apps.twitterzzz.adapters;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.codepath.apps.twitterzzz.R;
+import com.codepath.apps.twitterzzz.activities.ProfileActivity;
+import com.codepath.apps.twitterzzz.activities.TimelineActivity;
 import com.codepath.apps.twitterzzz.models.Tweet;
 import com.codepath.apps.twitterzzz.utils.Util;
 import com.squareup.picasso.Picasso;
@@ -25,7 +28,7 @@ public class TweetArrayAdapter extends ArrayAdapter<Tweet> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Tweet tweet = getItem(position);
+        final Tweet tweet = getItem(position);
 
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_tweet, parent, false);
@@ -39,6 +42,15 @@ public class TweetArrayAdapter extends ArrayAdapter<Tweet> {
 
         ivProfileImage.setImageResource(android.R.color.transparent);
         Picasso.with(getContext()).load(tweet.user.profileImageUrl).into(ivProfileImage);
+
+        ivProfileImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), ProfileActivity.class);
+                intent.putExtra("screen_name", tweet.user.screenName);
+                getContext().startActivity(intent);
+            }
+        });
 
         tvScreenName.setText("@" + tweet.user.screenName);
         tvName.setText("(" + tweet.user.name + ")");

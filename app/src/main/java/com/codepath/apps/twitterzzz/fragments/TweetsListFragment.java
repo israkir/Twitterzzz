@@ -24,15 +24,16 @@ public class TweetsListFragment extends Fragment {
     private ArrayList<Tweet> tweets;
     private TweetArrayAdapter aTweets;
     private ListView lvTweets;
+    View tweetsListFragmentView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_tweets_list, parent, false);
+        tweetsListFragmentView = inflater.inflate(R.layout.fragment_tweets_list, parent, false);
 
-        lvTweets = (ListView) v.findViewById(R.id.lvTweets);
+        lvTweets = (ListView) tweetsListFragmentView.findViewById(R.id.lvTweets);
         lvTweets.setAdapter(aTweets);
 
-        return v;
+        return tweetsListFragmentView;
     }
 
     @Override
@@ -56,6 +57,10 @@ public class TweetsListFragment extends Fragment {
 
     public TweetArrayAdapter getTweetsAdapter() {
         return aTweets;
+    }
+
+    public View getTweetsListFragmentView() {
+        return tweetsListFragmentView;
     }
 
     protected Boolean isNetworkAvailable() {

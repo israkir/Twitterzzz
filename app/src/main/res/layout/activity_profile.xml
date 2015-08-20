@@ -16,8 +16,8 @@
         android:id="@+id/profileHeader">
 
         <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
             android:id="@+id/ivProfileImage"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
@@ -39,13 +39,18 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="New Text"
             android:id="@+id/tvTagline"
-            android:paddingTop="5dp"
             android:textSize="12dp"
-            android:layout_below="@+id/tvName"
-            android:layout_alignLeft="@+id/tvName"
-            android:layout_alignStart="@+id/tvName" />
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="10dp"
+            android:layout_below="@+id/ivProfileImage"
+            android:layout_alignLeft="@+id/ivProfileImage"
+            android:layout_alignStart="@+id/ivProfileImage"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -53,22 +58,21 @@
             android:text="Following"
             android:paddingRight="10dp"
             android:id="@+id/tvFollowingCount"
-            android:layout_above="@+id/tvTagline"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:textSize="10dp" />
+            android:textSize="10dp"
+            android:layout_below="@+id/tvName"
+            android:layout_alignLeft="@+id/tvName"
+            android:layout_alignStart="@+id/tvName" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Followers"
-            android:paddingRight="10dp"
+            android:paddingRight="50dp"
             android:id="@+id/tvFollowersCount"
-            android:layout_alignBottom="@+id/tvTagline"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:textSize="10dp" />
-
+            android:textSize="10dp"
+            android:layout_below="@+id/tvFollowingCount"
+            android:layout_alignLeft="@+id/tvFollowingCount"
+            android:layout_alignStart="@+id/tvFollowingCount" />
     </RelativeLayout>
 
     <FrameLayout

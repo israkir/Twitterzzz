@@ -3,6 +3,7 @@ package com.codepath.apps.twitterzzz.activities;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -34,7 +35,9 @@ public class ProfileActivity extends ActionBarActivity {
         setContentView(R.layout.activity_profile);
 
         client = Twitterzzz.getRestClient(); // singleton client
-        client.getUserInfo(new JsonHttpResponseHandler() {
+        String screenName = getIntent().getStringExtra("screen_name");
+
+        client.getUserInfo(screenName, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 user = User.fromJson(response);
@@ -43,7 +46,6 @@ public class ProfileActivity extends ActionBarActivity {
             }
         });
 
-        String screenName = getIntent().getStringExtra("screen_name");
         if (savedInstanceState == null) {
             UserTimelineFragment fragmentUserTimeline = UserTimelineFragment.newInstance(screenName);
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -63,7 +65,7 @@ public class ProfileActivity extends ActionBarActivity {
         ivProfileImage.setImageResource(android.R.color.transparent);
         Picasso.with(getBaseContext()).load(user.profileImageUrl).into(ivProfileImage);
         if (user.tagline.length() > 0)
-            tvTagline.setText("\"" + user.tagline + "\"");
+            tvTagline.setText(user.tagline);
         tvName.setText("(" + user.name + ")");
         tvFollowingCount.setText(user.followingCount + " following");
         tvFollowersCount.setText(user.followersCount + " followers");

@@ -2,14 +2,19 @@ package com.codepath.apps.twitterzzz.fragments;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.codepath.apps.twitterzzz.R;
 import com.codepath.apps.twitterzzz.TwitterClient;
 import com.codepath.apps.twitterzzz.Twitterzzz;
 import com.codepath.apps.twitterzzz.activities.TimelineActivity;
+import com.codepath.apps.twitterzzz.adapters.TweetArrayAdapter;
 import com.codepath.apps.twitterzzz.listeners.EndlessScrollListener;
 import com.codepath.apps.twitterzzz.models.Tweet;
 import com.codepath.apps.twitterzzz.models.User;
@@ -31,15 +36,18 @@ public class HomeTimelineFragment extends TweetsListFragment {
         super.onCreate(savedInstanceState);
         client = Twitterzzz.getRestClient(); // singleton client
         populateTimeline(0);
-        // setScrollListener();
-        // setSwipeContainer();
         setUserInfo();
     }
 
-    private void populateTimeline(final long maxId) {
-        // if (maxId == 0)
-        // fragmentTweetsList.clear();
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedInstanceState) {
+        View v = super.onCreateView(inflater, parent, savedInstanceState);
+        setScrollListener();
+        setSwipeContainer();
+        return v;
+    }
 
+    private void populateTimeline(final long maxId) {
         if (isNetworkAvailable()) {
             client.getHomeTimeline(maxId, new JsonHttpResponseHandler() {
                 @Override
@@ -54,7 +62,6 @@ public class HomeTimelineFragment extends TweetsListFragment {
                     Toast.makeText(getActivity(), R.string.get_timeline_fail, Toast.LENGTH_SHORT).show();
                 }
             });
-            // aTweets.notifyDataSetChanged();
         } else {
             Toast.makeText(getActivity(), R.string.no_network, Toast.LENGTH_SHORT).show();
         }
@@ -71,9 +78,9 @@ public class HomeTimelineFragment extends TweetsListFragment {
         });
     }
 
-    /*
+
     private void setSwipeContainer() {
-        swipeContainer = (SwipeRefreshLayout) getFragmentManager().findFragmentById(R.id.swipeContainer);
+        swipeContainer = (SwipeRefreshLayout) getTweetsListFragmentView().findViewById(R.id.swipeContainer);
         // Setup refresh listener which triggers new data loading
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -92,14 +99,12 @@ public class HomeTimelineFragment extends TweetsListFragment {
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
     }
-    */
-
 
 
     private void setUserInfo() {
         FragmentActivity activity = getActivity();
         userInfo = activity.getSharedPreferences(TimelineActivity.USER_INFO, activity.MODE_PRIVATE);
-        client.getUserInfo(new JsonHttpResponseHandler() {
+        client.getUserInfo(null, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject jsonObject) {
                 User user = User.fromJson(jsonObject);
