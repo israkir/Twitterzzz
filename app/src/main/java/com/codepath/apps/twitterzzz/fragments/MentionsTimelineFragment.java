@@ -49,13 +49,12 @@ public class MentionsTimelineFragment extends TweetsListFragment {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONArray jsonArray) {
                     ArrayList<Tweet> mentions = Tweet.fromJsonArray(jsonArray);
+                    if (maxId != 0) mentions.remove(0);
                     addAll(mentions);
-                    Log.d("mentions", "====================i was here");
                 }
 
                 @Override
                 public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                    Log.d("mentions timeline fail", errorResponse.toString());
                     Toast.makeText(getActivity(), R.string.get_timeline_fail, Toast.LENGTH_SHORT).show();
                 }
             });

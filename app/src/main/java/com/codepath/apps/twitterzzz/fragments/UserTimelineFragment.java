@@ -54,6 +54,7 @@ public class UserTimelineFragment extends TweetsListFragment {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONArray jsonArray) {
                     ArrayList<Tweet> mentions = Tweet.fromJsonArray(jsonArray);
+                    if (maxId != 0) mentions.remove(0);
                     addAll(mentions);
                 }
 
