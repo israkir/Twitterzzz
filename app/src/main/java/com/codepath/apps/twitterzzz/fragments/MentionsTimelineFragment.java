@@ -75,7 +75,6 @@ public class MentionsTimelineFragment extends TweetsListFragment {
         });
     }
 
-
     private void setSwipeContainer() {
         swipeContainer = (SwipeRefreshLayout) getTweetsListFragmentView().findViewById(R.id.swipeContainer);
         // Setup refresh listener which triggers new data loading
@@ -84,7 +83,7 @@ public class MentionsTimelineFragment extends TweetsListFragment {
             public void onRefresh() {
                 TweetArrayAdapter aTweets = getTweetsAdapter();
                 swipeContainer.setRefreshing(true);
-                // aTweets.notifyDataSetChanged();
+                aTweets.notifyDataSetChanged();
                 aTweets.clear();
                 populateTimeline(0);
                 swipeContainer.setRefreshing(false);

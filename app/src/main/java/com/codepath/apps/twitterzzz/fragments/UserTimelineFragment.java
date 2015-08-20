@@ -2,12 +2,17 @@ package com.codepath.apps.twitterzzz.fragments;
 
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.codepath.apps.twitterzzz.R;
 import com.codepath.apps.twitterzzz.TwitterClient;
 import com.codepath.apps.twitterzzz.Twitterzzz;
+import com.codepath.apps.twitterzzz.listeners.EndlessScrollListener;
 import com.codepath.apps.twitterzzz.models.Tweet;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -24,7 +29,14 @@ public class UserTimelineFragment extends TweetsListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         client = Twitterzzz.getRestClient(); // singleton client
-        populateTimeline();
+        populateTimeline(0);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedInstanceState) {
+        View v = super.onCreateView(inflater, parent, savedInstanceState);
+        setScrollListener();
+        return v;
     }
 
     public static UserTimelineFragment newInstance(String screenName) {
@@ -35,10 +47,10 @@ public class UserTimelineFragment extends TweetsListFragment {
         return userFragment;
     }
 
-    private void populateTimeline() {
+    private void populateTimeline(final long maxId) {
         String screenName = getArguments().getString("screen_name");
         if (isNetworkAvailable()) {
-            client.getUserTimeline(screenName, new JsonHttpResponseHandler() {
+            client.getUserTimeline(screenName, maxId, new JsonHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONArray jsonArray) {
                     ArrayList<Tweet> mentions = Tweet.fromJsonArray(jsonArray);
@@ -54,6 +66,17 @@ public class UserTimelineFragment extends TweetsListFragment {
         } else {
             Toast.makeText(getActivity(), R.string.no_network, Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void setScrollListener() {
+        getLvTweets().setOnScrollListener(new EndlessScrollListener() {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount) {
+                ArrayList<Tweet> tweets = getTweets();
+                long id = tweets.get(tweets.size() - 1).id;
+                populateTimeline(id);
+            }
+        });
     }
 
 }
